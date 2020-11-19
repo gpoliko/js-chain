@@ -1,8 +1,8 @@
 import CryptoJS from 'crypto-js'
 
-class Block extends React.Component {
+class Block {
 
-    constructor (index, time_of_creation, data, previous_hash) {getHeapStatistics
+    constructor (index, time_of_creation, data, previous_hash) {
         this.index = index
         this.timeOfCreation = time_of_creation
         this.data = data
