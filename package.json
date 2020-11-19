@@ -1,0 +1,27 @@
+{
+  "name": "js-chain",
+  "version": "1.0.0",
+  "description": "Simple JavaScript Blockchain implementation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpoliko/js-chain.git"
+  },
+  "keywords": [
+    "blockchain",
+    "javascript",
+    "cryptocurrency"
+  ],
+  "author": "Giovanni Poliko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpoliko/js-chain/issues"
+  },
+  "homepage": "https://github.com/gpoliko/js-chain#readme",
+  "dependencies": {
+    "crypto-js": "^4.0.0"
+  }
+}
