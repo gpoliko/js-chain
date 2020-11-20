@@ -1,4 +1,5 @@
 const CryptoJS = require('crypto-js')
+
 class Block {
     constructor (index, time_of_creation, data, previous_hash) {
         this.index = index
@@ -35,7 +36,7 @@ class Chain {
     // Helper method for validation when adding a new block
     getCurrentBlock () {
         const currBlock = this.blockchain[this.blockchain.length - 1]
-        console.log(this.blockchain)
+        // console.log(this.blockchain)
         // console.log(currBlock)
         return currBlock
     }
@@ -86,4 +87,4 @@ gioCoin.createNewBlock(
     })
 )
 
-// console.log(JSON.stringify(gioCoin, null, 2))
+console.log(JSON.stringify(gioCoin, null, 2))
