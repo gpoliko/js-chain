@@ -1,4 +1,9 @@
 const CryptoJS = require('crypto-js')
+
+/*
+ * Author: Giovanni Poliko
+ * Project: EDA Personal Project - JavaScript Blockchain
+ */
 class Block {
     constructor (index, time_of_creation, data, previous_hash) {
         this.index = index
@@ -21,16 +26,21 @@ class Block {
         return converted
     }
 
+    // Proof of work algorithm
     mineBlock (difficulty) {
+        // nonce will continue to increment until the has of the block begins with enough zero's
+        // amount of required zero's is defined as difficulty
         while (this.hash.substr(0, difficulty) !== Array(difficulty + 1).join('0')) {
             this.nonce++
             this.hash = this.generateHash()
         }
-        console.log('Array:', Array(difficulty + 1))
-        console.log('MINED BLOCK:', this.hash)
+        // console.log('Array:', Array(difficulty + 1).join('0'))
+        console.log('\nMINED BLOCK:', this.hash)
     }
 }
 class Chain {
+    
+    // Set proof of work difficult rate
     constructor () {
         this.blockchain = [this.generateGenesis()]
         this.difficulty = 5
@@ -69,6 +79,7 @@ class Chain {
         newBlock.previousHash = this.getCurrentBlock().hash
         newBlock.mineBlock(this.difficulty)
         this.blockchain.push(newBlock)
+        console.log(newBlock)
     }
 
     // Validating the blockchain
@@ -95,12 +106,17 @@ class Chain {
     }
 }
 
+
+/*
+ * Blockchain testing with hard coded values (blocks)
+ */
 const gioCoin = new Chain()
 
 console.log('\n............................................................\n')
 console.log('.............        gioCoin Blockchain        .............\n')
 console.log('............................................................\n')
 console.log('\n*** MINING IN PROGRESS ***\n')
+console.log('Started:', gioCoin.generateTimeStamp())
 
 // Hard coded blocks to test the blockchain
 gioCoin.createNewBlock(
@@ -127,4 +143,5 @@ gioCoin.createNewBlock(
     })
 )
 
-console.log(JSON.stringify(gioCoin, null, 2))
+console.log('Ended:', gioCoin.generateTimeStamp())
+// console.log(JSON.stringify(gioCoin, null, 2))
