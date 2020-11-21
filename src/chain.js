@@ -1,5 +1,4 @@
 const CryptoJS = require('crypto-js')
-
 class Block {
     constructor (index, time_of_creation, data, previous_hash) {
         this.index = index
@@ -21,7 +20,6 @@ class Block {
         return converted
     }
 }
-
 class Chain {
     constructor () {
         this.blockchain = [this.generateGenesis()]
@@ -29,16 +27,16 @@ class Chain {
 
     // Generates the first block of the blockchain
     generateGenesis () {
-        return new Block(0, this.generateTimeStamp(), 'Genesis Block - First Block in the sick gioCoin JS-CHAIN', '0')
+        return new Block(0, this.generateTimeStamp(), 'Genesis Block - First Block in the sick gioCoin JS-CHAIN', '0') 
     }
 
     // Returns the newest block in the blockchain.
     // Helper method for validation when adding a new block
     getCurrentBlock () {
-        const currBlock = this.blockchain[this.blockchain.length - 1]
+        return this.blockchain[this.blockchain.length - 1]
         // console.log(this.blockchain)
         // console.log(currBlock)
-        return currBlock
+
     }
 
     // Generates a time to record the creation time of a new block
@@ -61,6 +59,29 @@ class Chain {
         newBlock.hash = newBlock.generateHash()
         this.blockchain.push(newBlock)
     }
+
+    // Validating the blockchain
+    validateBlockchain() {
+        // Loop starts at index 1 of the blockchain array
+        // because we cannot compare anything before the genesis block
+        for (let i = 1; this.blockchain.length; i++){
+            const current = this.blockchain[i]
+            const previous = this.blockchain[i - 1]
+
+            // Validate if current block's hash has not changed
+            // break loop if current block's hash has changed
+            if (current.hash !== current.generateHash()){
+                return false
+            }
+
+            // Validate if current block's previous hash matches the previous block's hash
+            // break loop if the hashes do not match
+            if (current.previousHash !== previous.hash){
+                return false
+            }
+            return true
+        }
+    }
 }
 
 const gioCoin = new Chain()
@@ -72,18 +93,26 @@ console.log('\n*** MINING IN PROGRESS ***\n')
 
 // Hard coded blocks to test the blockchain
 gioCoin.createNewBlock(
-    new Block(1, '19/11/2020-19:22:13', {
-        sender: 'Gio', 
-        recipient: 'Tom', 
-        amount: 30
+    new Block(1, gioCoin.generateTimeStamp(), {
+        sender: 'Tai', 
+        recipient: 'Gio', 
+        amount: 100
     })
 )
 
 gioCoin.createNewBlock(
-    new Block(1, '19/11/2020-19:23:07', {
-        sender: 'Tom',
-        recipient: 'Gio', 
-        amount: 15
+    new Block(2, gioCoin.generateTimeStamp(), {
+        sender: 'Gio',
+        recipient: 'Tai', 
+        amount: 300
+    })
+)
+
+gioCoin.createNewBlock(
+    new Block(3, gioCoin.generateTimeStamp(), {
+        sender: 'Tai',
+        recipient: 'Rod', 
+        amount: 300
     })
 )
 
