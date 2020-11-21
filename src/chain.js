@@ -5,12 +5,13 @@ class Block {
         this.timeOfCreation = time_of_creation
         this.data = data
         this.previousHash = previous_hash
+        this.nonce = 0
         this.hash = this.generateHash()
     }
 
     // Unique hash generation function
     generateHash () {
-        const hash =  CryptoJS.SHA512(this.index + this.timeOfCreation + JSON.stringify(this.data) + this.previousHash)
+        const hash =  CryptoJS.SHA512(this.index + this.timeOfCreation + JSON.stringify(this.data) + this.previousHash + this.nonce)
 
         /* 
         * Hash generation creates a WordArray Object 
@@ -19,10 +20,20 @@ class Block {
         const converted = hash.toString(CryptoJS.enc.Hex)
         return converted
     }
+
+    mineBlock (difficulty) {
+        while (this.hash.substr(0, difficulty) !== Array(difficulty + 1).join('0')) {
+            this.nonce++
+            this.hash = this.generateHash()
+        }
+        console.log('Array:', Array(difficulty + 1))
+        console.log('MINED BLOCK:', this.hash)
+    }
 }
 class Chain {
     constructor () {
         this.blockchain = [this.generateGenesis()]
+        this.difficulty = 4
     }
 
     // Generates the first block of the blockchain
@@ -56,7 +67,7 @@ class Chain {
     // Creates a new block in the blockchain
     createNewBlock (newBlock) {
         newBlock.previousHash = this.getCurrentBlock().hash
-        newBlock.hash = newBlock.generateHash()
+        newBlock.mineBlock(this.difficulty)
         this.blockchain.push(newBlock)
     }
 
