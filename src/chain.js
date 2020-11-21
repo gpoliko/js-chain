@@ -33,7 +33,7 @@ class Block {
 class Chain {
     constructor () {
         this.blockchain = [this.generateGenesis()]
-        this.difficulty = 4
+        this.difficulty = 5
     }
 
     // Generates the first block of the blockchain
