@@ -4,11 +4,19 @@ const CryptoJS = require('crypto-js')
  * Author: Giovanni Poliko
  * Project: EDA Personal Project - JavaScript Blockchain
  */
+
+class Transaction {
+    constructor (senderAddress, recipientAddress, amount) {
+        this.senderAddress = senderAddress
+        this.recipientAddress = recipientAddress
+        this.amount = amount
+    }
+}
+
 class Block {
-    constructor (index, time_of_creation, data, previous_hash) {
-        this.index = index
+    constructor (time_of_creation, transactions, previous_hash) {
         this.timeOfCreation = time_of_creation
-        this.data = data
+        this.transactions = transactions
         this.previousHash = previous_hash
         this.nonce = 0
         this.hash = this.generateHash()
@@ -16,7 +24,7 @@ class Block {
 
     // Unique hash generation function
     generateHash () {
-        const hash =  CryptoJS.SHA512(this.index + this.timeOfCreation + JSON.stringify(this.data) + this.previousHash + this.nonce)
+        const hash =  CryptoJS.SHA512(this.timeOfCreation + this.transactions + this.previousHash + this.nonce)
 
         /* 
         * Hash generation creates a WordArray Object 
@@ -28,7 +36,7 @@ class Block {
 
     // Proof of work algorithm
     mineBlock (difficulty) {
-        // nonce will continue to increment until the has of the block begins with enough zero's
+        // nonce will continue to increment until the hash of the block begins with enough zero's
         // amount of required zero's is defined as difficulty
         while (this.hash.substr(0, difficulty) !== Array(difficulty + 1).join('0')) {
             this.nonce++
@@ -43,12 +51,17 @@ class Chain {
     // Set proof of work difficult rate
     constructor () {
         this.blockchain = [this.generateGenesis()]
-        this.difficulty = 5
+        this.difficulty = 3
+        this.pendingTransactions = []
+        this.reward = 50
     }
 
     // Generates the first block of the blockchain
     generateGenesis () {
-        return new Block(0, this.generateTimeStamp(), 'Genesis Block - First Block in the sick gioCoin JS-CHAIN', '0') 
+        const genesisBlock = new Block(this.generateTimeStamp(), 'Genesis Block - First Block in the sick gioCoin JS-CHAIN', '0') 
+        console.log('---   GENESIS BLOCK   ---')
+        console.log(genesisBlock)
+        return genesisBlock
     }
 
     // Returns the newest block in the blockchain.
@@ -57,7 +70,6 @@ class Chain {
         return this.blockchain[this.blockchain.length - 1]
         // console.log(this.blockchain)
         // console.log(currBlock)
-
     }
 
     // Generates a time to record the creation time of a new block
@@ -74,12 +86,37 @@ class Chain {
         return timeStamp
     }
 
-    // Creates a new block in the blockchain
-    createNewBlock (newBlock) {
-        newBlock.previousHash = this.getCurrentBlock().hash
-        newBlock.mineBlock(this.difficulty)
-        this.blockchain.push(newBlock)
-        console.log(newBlock)
+    createTransaction (transaction) {
+        this.pendingTransactions.push(transaction)
+    }
+
+    mineTransactions (miningRewardAddress) {
+        let block = new Block(this.generateTimeStamp(), this.pendingTransactions, this.getCurrentBlock().hash)
+        block.mineBlock(this.difficulty)
+
+        console.log('Block successfully mined!')
+        this.blockchain.push(block)
+
+        this.pendingTransactions = [
+            new Transaction(null, miningRewardAddress, this.reward)
+        ]
+    }
+
+    getBalance (address) {
+        let balance = 0
+        for (const block of this.blockchain) {
+            console.log(block)
+            for (const trans of block.transactions) {
+                if (trans.senderAddress === address) {
+                    balance -= trans.amount
+                }
+
+                if (trans.recipientAddress === address) {
+                    balance += trans.amount
+                }
+            }
+        }
+        return balance
     }
 
     // Validating the blockchain
@@ -119,29 +156,18 @@ console.log('\n*** MINING IN PROGRESS ***\n')
 console.log('Started:', gioCoin.generateTimeStamp())
 
 // Hard coded blocks to test the blockchain
-gioCoin.createNewBlock(
-    new Block(1, gioCoin.generateTimeStamp(), {
-        sender: 'Tai', 
-        recipient: 'Gio', 
-        amount: 100
-    })
-)
+gioCoin.createTransaction(new Transaction('addy1', 'addy2', 100))
+gioCoin.createTransaction(new Transaction('addy2', 'addy1', 50))
 
-gioCoin.createNewBlock(
-    new Block(2, gioCoin.generateTimeStamp(), {
-        sender: 'Gio',
-        recipient: 'Tai', 
-        amount: 300
-    })
-)
+console.log('\n Starting the miner...')
+gioCoin.mineTransactions('gios-address')
+console.log('Balance of gio is', gioCoin.getBalance('gios-address'))
 
-gioCoin.createNewBlock(
-    new Block(3, gioCoin.generateTimeStamp(), {
-        sender: 'Tai',
-        recipient: 'Rod', 
-        amount: 300
-    })
-)
+gioCoin.createTransaction(new Transaction('addy1', 'gios-address', 175))
+gioCoin.createTransaction(new Transaction('gios-address', 'addy1', 25))
+gioCoin.mineTransactions('gios-address')
+console.log('Balance of gio is', gioCoin.getBalance('gios-addres'))
 
 console.log('Ended:', gioCoin.generateTimeStamp())
-// console.log(JSON.stringify(gioCoin, null, 2))
+console.log(gioCoin.validateBlockchain())
+// console.log(JSON.stringify(gioCoin, null, 4))
