@@ -4,8 +4,7 @@
 I am currently learning to write JavaScript applications. I also have a keen interest on blockchain technologies. I wanted to explore and learn more about this tech by writing my own blockchain from scratch, while sharpening my JavaScript "saw".
 
 ## Setup
----
-Before you proceed, you will need to [install Node](https://nodejs.org/en/download/package-manager/).
+> Before you proceed, you will need to [install Node](https://nodejs.org/en/download/package-manager/).
 
 In your terminal:
 ```
@@ -14,8 +13,13 @@ cd js-chain && npm install
 ``` 
 
 ## Updates
----
-- [x] Create Linked Blocks
+> A quick progress report on what I have been able to implement so far
+- Create a single Block
+- Create a hash for each Block
+- Create multiple Blocks which are linked
+- Implement a basic **Proof of Work** function
+- *Currently working on Transactions*
+- *Attempt signing of each transaction*
 
 
 
