@@ -1,51 +1,11 @@
-const CryptoJS = require('crypto-js')
+const { Transaction } = require('./transaction')
+const { Block } = require('./block')
 
 /*
  * Author: Giovanni Poliko
  * Project: EDA Personal Project - JavaScript Blockchain
  */
 
-class Transaction {
-    constructor (senderAddress, recipientAddress, amount) {
-        this.senderAddress = senderAddress
-        this.recipientAddress = recipientAddress
-        this.amount = amount
-    }
-}
-
-class Block {
-    constructor (time_of_creation, transactions, previous_hash) {
-        this.timeOfCreation = time_of_creation
-        this.transactions = transactions
-        this.previousHash = previous_hash
-        this.nonce = 0
-        this.hash = this.generateHash()
-    }
-
-    // Unique hash generation function
-    generateHash () {
-        const hash =  CryptoJS.SHA512(this.timeOfCreation + this.transactions + this.previousHash + this.nonce)
-
-        /* 
-        * Hash generation creates a WordArray Object 
-        * Need to convert the WordArray Object into a Hex string
-        */
-        const converted = hash.toString(CryptoJS.enc.Hex)
-        return converted
-    }
-
-    // Proof of work algorithm
-    mineBlock (difficulty) {
-        // nonce will continue to increment until the hash of the block begins with enough zero's
-        // amount of required zero's is defined as difficulty
-        while (this.hash.substr(0, difficulty) !== Array(difficulty + 1).join('0')) {
-            this.nonce++
-            this.hash = this.generateHash()
-        }
-        // console.log('Array:', Array(difficulty + 1).join('0'))
-        console.log('\nMINED BLOCK:', this.hash)
-    }
-}
 class Chain {
     
     // Set proof of work difficult rate
@@ -90,6 +50,8 @@ class Chain {
         this.pendingTransactions.push(transaction)
     }
 
+    // Mines transactions in the 'queue' - pendingTransactions array
+    // Takes an address as a parameter to reward that address (wallet) with cryptocurrency if they successfully mine the block
     mineTransactions (miningRewardAddress) {
         let block = new Block(this.generateTimeStamp(), this.pendingTransactions, this.getCurrentBlock().hash)
         block.mineBlock(this.difficulty)
@@ -97,11 +59,15 @@ class Chain {
         console.log('Block successfully mined!')
         this.blockchain.push(block)
 
+        // Reset the pendingTransactions array to a single transaction
+        // Single transaction is the cryptocurrency reward for the miner
+        // NOTE: This reward transaction must be mined in the next block to be saved to the blockchain
         this.pendingTransactions = [
             new Transaction(null, miningRewardAddress, this.reward)
         ]
     }
 
+    // Returns balance of a provided address/wallet
     getBalance (address) {
         let balance = 0
         for (const block of this.blockchain) {
@@ -143,31 +109,4 @@ class Chain {
     }
 }
 
-
-/*
- * Blockchain testing with hard coded values (blocks)
- */
-const gioCoin = new Chain()
-
-console.log('\n............................................................\n')
-console.log('.............        gioCoin Blockchain        .............\n')
-console.log('............................................................\n')
-console.log('\n*** MINING IN PROGRESS ***\n')
-console.log('Started:', gioCoin.generateTimeStamp())
-
-// Hard coded blocks to test the blockchain
-gioCoin.createTransaction(new Transaction('addy1', 'addy2', 100))
-gioCoin.createTransaction(new Transaction('addy2', 'addy1', 50))
-
-console.log('\n Starting the miner...')
-gioCoin.mineTransactions('gios-address')
-console.log('Balance of gio is', gioCoin.getBalance('gios-address'))
-
-gioCoin.createTransaction(new Transaction('addy1', 'gios-address', 175))
-gioCoin.createTransaction(new Transaction('gios-address', 'addy1', 25))
-gioCoin.mineTransactions('gios-address')
-console.log('Balance of gio is', gioCoin.getBalance('gios-addres'))
-
-console.log('Ended:', gioCoin.generateTimeStamp())
-console.log(gioCoin.validateBlockchain())
-// console.log(JSON.stringify(gioCoin, null, 4))
+module.exports.Chain = Chain
