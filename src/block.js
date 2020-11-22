@@ -9,7 +9,7 @@ class Block {
         this.hash = this.generateHash()
     }
 
-    // Unique hash generation function
+    // Unique hash generation function for each block
     generateHash () {
         const hash =  CryptoJS.SHA512(this.timeOfCreation + this.transactions + this.previousHash + this.nonce)
 
