@@ -43,7 +43,7 @@ class Chain {
     // Set proof of work difficult rate
     constructor () {
         this.blockchain = [this.generateGenesis()]
-        this.difficulty = 4
+        this.difficulty = 10
     }
 
     // Generates the first block of the blockchain
