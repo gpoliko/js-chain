@@ -18,13 +18,13 @@ gioCoin.createTransaction(new Transaction('addy2', 'addy1', 50))
 
 console.log('\n Starting the miner...')
 gioCoin.mineTransactions('gios-address')
-console.log('Balance of gio is', gioCoin.getBalance('gios-address'))
+// console.log('Balance of gio is', gioCoin.getBalance('gios-address'))
 
 gioCoin.createTransaction(new Transaction('addy1', 'gios-address', 175))
 gioCoin.createTransaction(new Transaction('gios-address', 'addy1', 25))
 gioCoin.mineTransactions('gios-address')
-console.log('Balance of gio is', gioCoin.getBalance('gios-addres'))
+// console.log('Balance of gio is', gioCoin.getBalance('gios-addres'))
 
 console.log('Ended:', gioCoin.generateTimeStamp())
-console.log(gioCoin.validateBlockchain())
-// console.log(JSON.stringify(gioCoin, null, 4))
+// console.log(gioCoin.validateBlockchain())
+console.log(JSON.stringify(gioCoin, null, 2))

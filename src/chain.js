@@ -11,7 +11,7 @@ class Chain {
     // Set proof of work difficult rate
     constructor () {
         this.blockchain = [this.generateGenesis()]
-        this.difficulty = 3
+        this.difficulty = 4
         this.pendingTransactions = []
         this.reward = 50
     }
