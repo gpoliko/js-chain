@@ -46,7 +46,17 @@ class Chain {
         return timeStamp
     }
 
-    createTransaction (transaction) {
+    addNewTransaction (transaction) {
+        // Sender and Recipient address are given
+        if (!transaction.senderAddress || !transaction.recipientAddress) {
+            console.log('Transaction\'s sender and recipient address cannot be empty')
+        }
+
+        // Validate transaction
+        if (!transaction.isValid()) {
+            console.log('Cannot add invalid transaction to the blockchain')
+        }
+
         this.pendingTransactions.push(transaction)
     }
 
@@ -92,6 +102,11 @@ class Chain {
         for (let i = 1; this.blockchain.length; i++){
             const current = this.blockchain[i]
             const previous = this.blockchain[i - 1]
+
+            // Validate transactions in the block
+            if (!current.transactionsAreValid()) {
+                return false
+            }
 
             // Validate if current block's hash has not changed
             // break loop if current block's hash has changed

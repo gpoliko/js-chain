@@ -1,7 +1,7 @@
 # js-chain
 > A basic cryptocurrency blockchain written in JavaScript
 
-I am currently learning to write JavaScript applications. I also have a keen interest on blockchain technologies. I wanted to explore and learn more about this tech by writing my own blockchain from scratch, while sharpening my JavaScript "saw".
+I am currently learning to write JavaScript applications. I also have a keen interest on blockchain technologies. I wanted to explore and learn more about this tech by learning to write my own blockchain, while also sharpening my JavaScript "saw".
 
 ## Setup
 > Before you proceed, you will need to [install Node](https://nodejs.org/en/download/package-manager/).
@@ -21,5 +21,7 @@ cd js-chain && npm install
 - *Currently working on Transactions*
 - *Attempt signing of each transaction*
 
+## References
+> List of works I used to assist with this project
 
 
