@@ -21,6 +21,10 @@ cd js-chain && npm install
 - *Currently working on Transactions*
 - *Attempt signing of each transaction*
 
+## Todo (Backlog)
+> List of 'stretches' or features to add
+- Build a UI
+
 ## References
 > List of works I used to assist with this project
 
