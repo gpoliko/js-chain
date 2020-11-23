@@ -32,6 +32,17 @@ class Block {
         // console.log('Array:', Array(difficulty + 1).join('0'))
         console.log('\nMINED BLOCK:', this.hash)
     }
+
+    // Function to validate all transactions within the block are valid (signed)
+    transactionsAreValid () {
+        for (const transaction of this.transactions) {
+            if (!transaction.isValid()) {
+                return false
+            }
+        
+            return true
+        }
+    }
 }
 
 module.exports.Block = Block

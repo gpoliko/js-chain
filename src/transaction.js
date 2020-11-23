@@ -41,13 +41,14 @@ class Transaction {
         // Validating "reward" transaction
         if (this.senderAddress === null ) return true
 
-        // Validating when no signature is found
+        // Validating for signed transaction
         if(!this.signature || this.signature.length === 0) {
             console.log('No signature found for this transaction')
         }
 
         // Create new publicKey obj from the senderAddress
         // senderAddress is the publicKey
+        // Verify that the transaction has been signed by the correct key
         const publicKey = ec.keyFromPublic(this.senderAddress, 'hex')
         return publicKey.verify(this.generateHash(), this.signature)
     }
