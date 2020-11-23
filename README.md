@@ -23,6 +23,7 @@ cd js-chain && npm install
 ## Todo (Backlog)
 > List of 'stretches' or features to add
 - Build a UI
+    - Refactor 'src' files to "mimic" a database
 - Implement authentication
     - Allow users to create "wallets"
     - Allow users to conduct transactions with each other
