@@ -28,6 +28,7 @@ cd js-chain && npm install
     - Allow users to create "wallets"
     - Allow users to conduct transactions with each other
 - Testing???
+    - Yeah... Nah... Maybe... Jest Do It?
 
 ## References
 > List of works I used to assist with this project
