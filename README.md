@@ -18,12 +18,15 @@ cd js-chain && npm install
 - Create a hash for each Block
 - Create multiple Blocks which are linked
 - Implement a basic **Proof of Work** function
-- *Currently working on Transactions*
-- *Attempt signing of each transaction*
+- Implement Transactions
 
 ## Todo (Backlog)
 > List of 'stretches' or features to add
 - Build a UI
+- Implement authentication
+    - Allow users to create "wallets"
+    - Allow users to conduct transactions with each other
+- Testing???
 
 ## References
 > List of works I used to assist with this project
