@@ -29,7 +29,6 @@ class Block {
             this.nonce++
             this.hash = this.generateHash()
         }
-        // console.log('Array:', Array(difficulty + 1).join('0'))
         console.log('\nMINED BLOCK:', this.hash)
     }
 

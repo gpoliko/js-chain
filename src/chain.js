@@ -13,12 +13,12 @@ class Chain {
         this.blockchain = [this.generateGenesis()]
         this.difficulty = 4
         this.pendingTransactions = []
-        this.reward = 50
+        this.reward = 100
     }
 
     // Generates the first block of the blockchain
     generateGenesis () {
-        const genesisBlock = new Block(this.generateTimeStamp(), 'Genesis Block - First Block in the sick gioCoin JS-CHAIN', '0') 
+        const genesisBlock = new Block(this.generateTimeStamp(), [ new Transaction('Genesis Block - First Block in the sick gioCoin JS-CHAIN') ], '0') 
         console.log('---   GENESIS BLOCK   ---')
         console.log(genesisBlock)
         return genesisBlock
@@ -81,8 +81,11 @@ class Chain {
     getBalance (address) {
         let balance = 0
         for (const block of this.blockchain) {
-            console.log(block)
+            // console.log()
+            // console.log(block)
+            // console.log()
             for (const trans of block.transactions) {
+                // console.log(trans)
                 if (trans.senderAddress === address) {
                     balance -= trans.amount
                 }
