@@ -57,4 +57,4 @@ console.log()
 
 // Check if the blockchain is valid and hasn't been tampered with
 // console.log('Blockchain is valid:', gioCoin.validateBlockchain())
-// console.log(JSON.stringify(gioCoin, null, 2))
+console.log(JSON.stringify(gioCoin, null, 2))
