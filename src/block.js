@@ -25,7 +25,7 @@ class Block {
     mineBlock (difficulty) {
         // nonce will continue to increment until the hash of the block begins with enough zero's
         // amount of required zero's is defined as difficulty
-        while (this.hash.substr(0, difficulty) !== Array(difficulty + 1).join('0')) {
+        while (this.hash.substr(0, difficulty) !== Array(difficulty + 2).join('0')) {
             this.nonce++
             this.hash = this.generateHash()
         }
