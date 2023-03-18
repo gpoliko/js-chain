@@ -1,7 +1,8 @@
 # js-chain
-> A basic cryptocurrency blockchain written in JavaScript
+> Simple JavaScript PoW blockchain
 
-I am currently learning to write JavaScript applications. I also have a keen interest on blockchain technologies. I wanted to explore and learn more about this tech by learning to write my own blockchain, while also sharpening my JavaScript "saw".
+Built as a personal project during my time at Enspiral Dev Academy as a means of getting a better understanding of blockchain tech.
+
 
 ## Setup
 > Before you proceed, you will need to [install Node](https://nodejs.org/en/download/package-manager/).
